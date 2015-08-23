@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<program xmlns="http://www.obidea.com/ns/termal#"
+   xmlns:tml="http://www.obidea.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="geo" tml:ns="http://www.w3.org/2003/01/geo/wgs84_pos#" />
+   <prefix tml:name="ov" tml:ns="http://open.vocab.org/terms/" />
+   <prefix tml:name="rdfs" tml:ns="http://www.w3.org/2000/01/rdf-schema#" />
+   <prefix tml:name="rr" tml:ns="http://www.w3.org/ns/r2rml#" />
+
+   <uri-template tml:name="Place" tml:value="http://musicbrainz.org/place/{1}#_" />
+
+   <mapping tml:id="place">
+      <logical-table rr:tableName="place" />
+      <subject-map rr:class="geo:SpatialThing" rr:template="Place(gid)"/>
+      <predicate-object-map rr:predicate="rdfs:label" rr:column="name"/>
+   </mapping>
+   <mapping tml:id="area_iso_3166_1">
+      <logical-table>
+      <![CDATA[
+         select gid, text
+         from annotation
+         join place_annotation on annotation.id = place_annotation.annotation
+         join place on place_annotation.place = place.id
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Place(gid)"/>
+      <predicate-object-map rr:predicate="rdfs:comment" rr:column="text"/>
+   </mapping>
+</program>

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE semantika-configuration PUBLIC
+   "-//Semantika/Semantika Configuration DTD//EN"
+   "http://www.obidea.com/semantika/dtd/semantika-configuration-1.0.dtd">
+
+<semantika-configuration>
+   <application-factory name="materializer-h2">
+      <data-source>
+         <property name="connection.url">jdbc:mysql://localhost:3306/empdb</property>
+         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+         <property name="connection.username">semantika</property>
+         <property name="connection.password">semantika</property>
+         <property name="connection.pool.intial_size">10</property>
+         <property name="connection.pool.min_size">10</property>
+         <property name="connection.pool.max_size">30</property>
+         <property name="connection.pool.timeout">600</property>
+      </data-source>
+      <ontology-source resource="model/empdb/empdb.owl" />
+      <mapping-source resource="model/empdb/mysql/empdb.mod.xml" />
+   </application-factory>
+</semantika-configuration>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<program xmlns="http://www.obidea.com/ns/termal#"
+   xmlns:tml="http://www.obidea.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="mo" tml:ns="http://purl.org/ontology/mo/" />
+   <prefix tml:name="foaf" tml:ns="http://xmlns.com/foaf/0.1/" />
+   <prefix tml:name="rdfs" tml:ns="http://www.w3.org/2000/01/rdf-schema#" />
+   <prefix tml:name="rr" tml:ns="http://www.w3.org/ns/r2rml#" />
+
+   <uri-template tml:name="Label" tml:value="http://musicbrainz.org/label/{1}#_" />
+   <uri-template tml:name="Area" tml:value="http://musicbrainz.org/area/{1}#_" />
+
+   <mapping tml:id="Label">
+      <logical-table rr:tableName="label" />
+      <subject-map rr:class="mo:Label" rr:template="Label(gid)"/>
+      <predicate-object-map rr:predicate="mo:musicbrainz_guid" rr:column="gid"/>
+   </mapping>
+   <mapping tml:id="label_area">
+      <logical-table>
+      <![CDATA[
+         select label.gid as label_gid, area.gid AS area_gid
+         from label
+         join area on label.area = area.id
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Label(label_gid)"/>
+      <predicate-object-map rr:predicate="foaf:based_near" rr:template="Area(area_gid)"/>
+   </mapping>
+   <mapping tml:id="label_annotation">
+      <logical-table>
+      <![CDATA[
+         select gid, text 
+         from annotation 
+         join label_annotation on annotation.id = label_annotation.annotation
+         join label on label_annotation.label = label.id
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Label(gid)"/>
+      <predicate-object-map rr:predicate="rdfs:comment" rr:column="text"/>
+   </mapping>
+</program>

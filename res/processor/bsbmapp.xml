@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<program xmlns="http://www.logichand.com/ns/termal#"
+   xmlns:tml="http://www.logichand.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+   <prefix tml:name="bsbm" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+
+   <uri-template tml:name="Offer" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/product/{1}/" />
+   <uri-template tml:name="Review" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/review/{1}/" />
+   <uri-template tml:name="Product" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/product/{1}/" />
+   <uri-template tml:name="Producer" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/producer/{1}/" />
+   <uri-template tml:name="Vendor" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vendor/{1}/" />
+   <uri-template tml:name="Customer" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/customer/{1}/" />
+   <uri-template tml:name="Reviewer" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/reviewer/{1}/" />
+   <uri-template tml:name="Critics" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/critics/{1}/" />
+   <uri-template tml:name="ProductFeature" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/feature/{1}/" />
+
+   <mapping tml:id="TriplesMap1">
+      <logical-table>
+      <![CDATA[
+         select nr
+         from person
+         where country='ID']]>
+      </logical-table>
+      <subject-map
+         rr:class="bsbm:Local"
+         rr:template="Customer(nr)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap2">
+      <logical-table>
+      <![CDATA[
+         select nr
+         from person
+         where country<>'ID']]>
+      </logical-table>
+      <subject-map
+         rr:class="bsbm:Global"
+         rr:template="Customer(nr)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap3">
+      <logical-table>
+      <![CDATA[
+         select nr, propertyTex1
+         from product
+         where propertyNum1 is not null]]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(nr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:property1"
+         rr:column="propertyTex1"/>
+   </mapping>
+   <mapping tml:id="TriplesMap4">
+      <logical-table>
+      <![CDATA[
+         select nr, propertyTex2
+         from product
+         where propertyNum2 is not null]]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(nr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:property2"
+         rr:column="propertyTex2"/>
+   </mapping>
+   <mapping tml:id="TriplesMap5">
+      <logical-table>
+      <![CDATA[
+         select product.nr as productNr, producer.nr as producerNr
+         from product
+         join producer on product.producer=producer.nr
+         where country='ID']]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(productNr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:hasLocalProducer"
+         rr:template="Producer(producerNr)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap6">
+      <logical-table>
+      <![CDATA[
+         select product.nr as productNr, producer.nr as producerNr
+         from product
+         join producer on product.producer=producer.nr
+         where country<>'ID']]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(productNr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:hasIntlProducer"
+         rr:template="Producer(producerNr)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap7">
+      <logical-table>
+      <![CDATA[
+         select product.nr as productNr, price
+         from product
+         join offer on product.nr=offer.product]]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(productNr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:price"
+         rr:column="price"/>
+   </mapping>
+   <mapping tml:id="TriplesMap8">
+      <logical-table>
+      <![CDATA[
+         select product, productFeature
+         from productfeatureproduct]]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(product)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:hasProductFeature"
+         rr:template="ProductFeature(productFeature)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap9">
+      <logical-table>
+      <![CDATA[
+         select nr, person
+         from review]]>
+      </logical-table>
+      <subject-map
+         rr:template="Review(nr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:hasCommentFrom"
+         rr:template="Reviewer(person)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap10">
+      <logical-table>
+      <![CDATA[
+         select person, product
+         from review]]>
+      </logical-table>
+      <subject-map
+         rr:template="Reviewer(person)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:hasReviewFor"
+         rr:template="Product(product)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap11">
+      <logical-table>
+      <![CDATA[
+         select producer.nr as producerNr, vendor.nr as vendorNr
+         from producer
+         join vendor on producer.homepage=vendor.homepage]]>
+      </logical-table>
+      <subject-map
+         rr:template="Producer(producerNr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:worksFor"
+         rr:template="Vendor(vendorNr)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap12">
+      <logical-table>
+      <![CDATA[
+         select person
+         from review
+         where publisher='CriticsMagazine' or publisher='ReviewMagazine']]>
+      </logical-table>
+      <subject-map
+         rr:class="bsbm:Critics"
+         rr:template="Critics(person)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap13">
+      <logical-table>
+      <![CDATA[
+         select nr, propertyTex3
+         from product
+         where propertyNum3 is not null]]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(nr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:property3"
+         rr:column="propertyTex3"/>
+   </mapping>
+   <mapping tml:id="TriplesMap14">
+      <logical-table>
+      <![CDATA[
+         select nr, propertyTex4
+         from product
+         where propertyNum4 is not null]]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(nr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:property4"
+         rr:column="propertyTex4"/>
+   </mapping>
+   <mapping tml:id="TriplesMap15">
+      <logical-table>
+      <![CDATA[
+         select offer.product as productNr, offer.vendor as vendorNr
+         from offer]]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(productNr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:hasVendor"
+         rr:template="Vendor(vendorNr)"/>
+   </mapping>
+</program>

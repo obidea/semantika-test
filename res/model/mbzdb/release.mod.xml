@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<program xmlns="http://www.obidea.com/ns/termal#"
+   xmlns:tml="http://www.obidea.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="mo" tml:ns="http://purl.org/ontology/mo/" />
+   <prefix tml:name="dc" tml:ns="http://purl.org/dc/elements/1.1/" />
+   <prefix tml:name="rdfs" tml:ns="http://www.w3.org/2000/01/rdf-schema#" />
+   <prefix tml:name="event" tml:ns="http://purl.org/NET/c4dm/event.owl#" />
+   <prefix tml:name="rr" tml:ns="http://www.w3.org/ns/r2rml#" />
+   <prefix tml:name="xsd" tml:ns="http://www.w3.org/2001/XMLSchema#" />
+
+   <uri-template tml:name="Artist" tml:value="http://musicbrainz.org/artist/{1}#_" />
+   <uri-template tml:name="Release" tml:value="http://musicbrainz.org/release/{1}#_" />
+   <uri-template tml:name="ReleaseEvent" tml:value="http://musicbrainz.org/release/{1}#{2}" />
+   <uri-template tml:name="Record" tml:value="http://musicbrainz.org/record/{1}#_" />
+   <uri-template tml:name="SignalGroup" tml:value="http://musicbrainz.org/signal-group/{1}#_" />
+   <uri-template tml:name="Label" tml:value="http://musicbrainz.org/label/{1}#_" />
+   <uri-template tml:name="Area" tml:value="http://musicbrainz.org/area/{1}#_" />
+
+   <mapping tml:id="Release">
+      <logical-table rr:tableName="release" />
+      <subject-map rr:class="mo:Release" rr:template="Release(gid)"/>
+      <predicate-object-map rr:predicate="mo:musicbrainz_guid" rr:column="gid"/>
+      <predicate-object-map rr:predicate="dc:title" rr:column="name"/>
+   </mapping>
+   <mapping tml:id="release_record">
+      <logical-table>
+      <![CDATA[
+         select release.gid as release_gid, medium.id as medium_id
+         from release
+         join medium on release.id = medium.release
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Release(release_gid)"/>
+      <predicate-object-map rr:predicate="mo:record" rr:template="Record(medium_id)"/>
+   </mapping>
+   <mapping tml:id="release_release_group">
+      <logical-table>
+      <![CDATA[
+         select release.gid as release_gid, release_group.gid as release_group_gid
+         from release
+         join release_group on release.release_group = release_group.id
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Release(release_gid)"/>
+      <predicate-object-map rr:predicate="event:factor" rr:template="SignalGroup(release_group_gid)"/>
+   </mapping>
+   <mapping tml:id="release_label">
+      <logical-table>
+      <![CDATA[
+         select release.gid as release_gid, label.gid as label_gid
+         from label
+         join release_label on label.id = release_label.label
+         join release on release.id = release_label.release
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Release(release_gid)"/>
+      <predicate-object-map rr:predicate="mo:label" rr:template="Label(label_gid)"/>
+   </mapping>
+   <mapping tml:id="ReleaseEvent">
+      <logical-table>
+      <![CDATA[
+         select release.gid as release_gid, area.gid as country
+         from release 
+         join release_country on release_country.release = release.id
+         join area on area.id = release_country.country
+         where date_year IS NOT NULL
+            and date_month IS NOT NULL
+            and date_day IS NOT NULL
+      ]]>
+      </logical-table>
+      <subject-map rr:class="mo:ReleaseEvent" rr:template="ReleaseEvent(release_gid, country)"/>
+      <predicate-object-map rr:predicate="mo:release" rr:template="Release(release_gid)"/>
+   </mapping>
+   <mapping tml:id="release_event_date">
+      <logical-table>
+      <![CDATA[
+         select release.gid as release_gid,
+                (btrim(to_char(date_year, '0000')) || '-' || btrim(to_char(date_month, '00')) || '-' || btrim(to_char(date_day, '00'))) as date,
+                area.gid as country
+         from release 
+         join release_country on release_country.release = release.id
+         join area on area.id = release_country.country
+         where date_year is not null
+            and date_month is not null
+            and date_day IS NOT NULL
+      ]]>
+      </logical-table>
+      <subject-map rr:template="ReleaseEvent(release_gid, country)"/>
+      <predicate-object-map rr:predicate="dc:date" rr:column="date" rr:datatype="xsd:date"/>
+   </mapping>
+   <mapping tml:id="release_event_date_year_month">
+      <logical-table>
+      <![CDATA[
+         select release.gid as release_gid,
+                (btrim(to_char(date_year, '0000')) || '-' || btrim(to_char(date_month, '00'))) as year_month,
+                area.gid as country
+         from release 
+         join release_country on release_country.release = release.id
+         join area on area.id = release_country.country
+         where date_year is not null
+            and date_month is not null
+            and date_day is null
+      ]]>
+      </logical-table>
+      <subject-map rr:template="ReleaseEvent(release_gid, country)"/>
+      <predicate-object-map rr:predicate="dc:date" rr:column="year_month" rr:datatype="xsd:gYearMonth"/>
+   </mapping>
+   <mapping tml:id="release_event_date_year">
+      <logical-table>
+      <![CDATA[
+         select release.gid as release_gid,
+                btrim(to_char(date_year, '0000')) as year,
+                area.gid as country
+         from release 
+         join release_country on release_country.release = release.id
+         join area on area.id = release_country.country
+         where date_year is not null
+            and date_month is null
+            and date_day is null
+      ]]>
+      </logical-table>
+      <subject-map rr:template="ReleaseEvent(release_gid, country)"/>
+      <predicate-object-map rr:predicate="dc:date" rr:column="year" rr:datatype="xsd:gYear"/>
+   </mapping>
+   <mapping tml:id="release_event_place">
+      <logical-table>
+      <![CDATA[
+         select release.gid as release_gid, area.gid as country
+         from release
+         join release_country on release_country.release = release.id
+         join area on area.id = release_country.country
+      ]]>
+      </logical-table>
+      <subject-map rr:template="ReleaseEvent(release_gid, country)"/>
+      <predicate-object-map rr:predicate="event:place" rr:template="Area(country)"/>
+   </mapping>
+   <mapping tml:id="release_annotation">
+      <logical-table>
+      <![CDATA[
+         select gid, text
+         from annotation
+         join release_annotation on annotation.id = release_annotation.annotation
+         join release on release_annotation.release = release.id
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Release(gid)"/>
+      <predicate-object-map rr:predicate="rdfs:comment" rr:column="text"/>
+   </mapping>
+</program>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<program xmlns="http://www.obidea.com/ns/termal#"
+   xmlns:tml="http://www.obidea.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="owl" tml:ns="http://www.w3.org/2002/07/owl#" />
+   <prefix tml:name="rdfs" tml:ns="http://www.w3.org/2000/01/rdf-schema#" />
+   <prefix tml:name="rr" tml:ns="http://www.w3.org/ns/r2rml#" />
+
+   <uri-template tml:name="Area" tml:value="http://musicbrainz.org/area/{1}#_" />
+   <uri-template tml:name="Artist" tml:value="http://musicbrainz.org/artist/{1}#_" />
+   <uri-template tml:name="ReleaseGroup" tml:value="http://musicbrainz.org/signal-group/{1}#_" />
+
+   <mapping tml:id="artist_dbpedia">
+      <logical-table>
+      <![CDATA[
+         select artist.gid as artist_gid,
+                replace(replace(url, 'wikipedia.org/wiki', 'dbpedia.org/resource'),
+                                     'http://en.', 'http://') AS url
+         from artist
+         join l_artist_url on artist.id = l_artist_url.entity0
+         join link on l_artist_url.link = link.id
+         join link_type on link_type = link_type.id
+         join url on l_artist_url.entity1 = url.id
+         where link_type.gid='29651736-fa6d-48e4-aadc-a557c6add1cb' and
+               url LIKE '%wikipedia.org/wiki/%'
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Artist(artist_gid)"/>
+      <predicate-object-map rr:predicate="owl:sameAs" rr:column="url" rr:termType="rr:IRI"/>
+   </mapping>
+   <mapping tml:id="release_group_dbpedia">
+      <logical-table>
+      <![CDATA[
+         select release_group.gid as release_group_gid,
+                replace(replace(url, 'wikipedia.org/wiki', 'dbpedia.org/resource'),
+                                     'http://en.', 'http://') AS url
+         from release_group
+         join l_release_group_url on release_group.id = l_release_group_url.entity0
+         join link on l_release_group_url.link = link.id
+         join link_type on link_type = link_type.id
+         join url on l_release_group_url.entity1 = url.id
+         where link_type.gid='6578f0e9-1ace-4095-9de8-6e517ddb1ceb' and
+               url LIKE '%wikipedia.org/wiki/%'
+      ]]>
+      </logical-table>
+      <subject-map rr:template="ReleaseGroup(release_group_gid)"/>
+      <predicate-object-map rr:predicate="rdfs:seeAlso" rr:column="url" rr:termType="rr:IRI"/>
+   </mapping>
+   <mapping tml:id="area_dbpedia">
+      <logical-table>
+      <![CDATA[
+         select area.gid as area_gid,
+                replace(replace(url, 'wikipedia.org/wiki', 'dbpedia.org/resource'),
+                                     'http://en.', 'http://') AS url
+         from area
+         join l_area_url on area.id = l_area_url.entity0
+         join link on l_area_url.link = link.id
+         join link_type on link_type = link_type.id
+         join url on l_area_url.entity1 = url.id
+         where link_type.gid='9228621d-9720-35c3-ad3f-327d789464ec' and
+               url LIKE '%wikipedia.org/wiki/%'
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Area(area_gid)"/>
+      <predicate-object-map rr:predicate="owl:sameAs" rr:column="url" rr:termType="rr:IRI"/>
+   </mapping>
+</program>

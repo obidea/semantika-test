@@ -1,0 +1,320 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE Ontology [
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     ontologyIRI="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/">
+    <Prefix name="" IRI="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/"/>
+    <Prefix name="dc" IRI="http://purl.org/dc/elements/1.1/"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="bsbm" IRI="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/"/>
+    <Prefix name="foaf" IRI="http://xmlns.com/foaf/0.1/"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <Class IRI="Critics"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Customer"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Global"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Local"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Offer"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Person"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Producer"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Product"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="ProductFeature"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="ProductType"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="ProductionChain"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Review"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Reviewer"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="Vendor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="dc:hasPublisher"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasCommentFrom"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasCommentedIn"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasCountry"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasIntlProducer"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasLocalProducer"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasProducer"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasProduct"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasProductFeature"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasReviewFor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasReviewedBy"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasSeller"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasType"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="hasVendor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="worksFor"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="dc:date"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="dc:title"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="http://purl.org/stuff/rev#text"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="rdfs:comment"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="rdfs:label"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="cost"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="deliveryDays"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="offerWebpage"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="price"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="productProperty"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="property1"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="property2"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="property3"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="property4"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="property5"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="property6"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="quality"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="rating1"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="rating2"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="rating3"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="rating4"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="reviewDate"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="validFrom"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="validTo"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="foaf:homepage"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="foaf:name"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="Critics"/>
+        <Class IRI="Reviewer"/>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="Critics"/>
+        <Class IRI="Person"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Customer"/>
+        <Class IRI="Person"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Global"/>
+        <Class IRI="Customer"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Local"/>
+        <Class IRI="Customer"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Producer"/>
+        <Class IRI="ProductionChain"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Reviewer"/>
+        <Class IRI="Person"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="Vendor"/>
+        <Class IRI="ProductionChain"/>
+    </SubClassOf>
+    <EquivalentObjectProperties>
+        <ObjectProperty IRI="hasSeller"/>
+        <ObjectProperty IRI="hasVendor"/>
+    </EquivalentObjectProperties>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="hasIntlProducer"/>
+        <ObjectProperty IRI="hasProducer"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="hasLocalProducer"/>
+        <ObjectProperty IRI="hasProducer"/>
+    </SubObjectPropertyOf>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="hasCommentFrom"/>
+        <ObjectProperty IRI="hasCommentedIn"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="hasReviewedBy"/>
+        <ObjectProperty IRI="hasReviewFor"/>
+    </InverseObjectProperties>
+    <SymmetricObjectProperty>
+        <ObjectProperty IRI="worksFor"/>
+    </SymmetricObjectProperty>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="hasProductFeature"/>
+        <Class IRI="Product"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="hasReviewFor"/>
+        <Class IRI="Reviewer"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="hasProductFeature"/>
+        <Class IRI="ProductFeature"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="hasReviewFor"/>
+        <Class IRI="Product"/>
+    </ObjectPropertyRange>
+    <EquivalentDataProperties>
+        <DataProperty IRI="cost"/>
+        <DataProperty IRI="property3"/>
+    </EquivalentDataProperties>
+    <EquivalentDataProperties>
+        <DataProperty IRI="property4"/>
+        <DataProperty IRI="quality"/>
+    </EquivalentDataProperties>
+    <SubDataPropertyOf>
+        <DataProperty IRI="property1"/>
+        <DataProperty IRI="productProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="property2"/>
+        <DataProperty IRI="productProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="property3"/>
+        <DataProperty IRI="productProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="property4"/>
+        <DataProperty IRI="productProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="property5"/>
+        <DataProperty IRI="productProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="property6"/>
+        <DataProperty IRI="productProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="rating1"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="rating2"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="rating3"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="rating4"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <DataPropertyDomain>
+        <DataProperty IRI="price"/>
+        <Class IRI="Product"/>
+    </DataPropertyDomain>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+

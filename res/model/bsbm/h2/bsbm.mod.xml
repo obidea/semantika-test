@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<program xmlns="http://www.logichand.com/ns/termal#"
+   xmlns:tml="http://www.logichand.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+   <prefix tml:name="foaf" tml:ns="http://xmlns.com/foaf/0.1/" />
+   <prefix tml:name="dc" tml:ns="http://purl.org/dc/elements/1.1/" />
+   <prefix tml:name="rev" tml:ns="http://purl.org/stuff/rev#" />
+   <prefix tml:name="rdfs" tml:ns="http://www.w3.org/2000/01/rdf-schema#" />
+   <prefix tml:name="bsbm" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+   <prefix tml:name="xsd" tml:ns="http://www.w3.org/2001/XMLSchema#" />
+   
+   <uri-template tml:name="Offer" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromVendor{1}/Offer{2}" />
+   <uri-template tml:name="OfferPublisher" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromVendor{1}/Vendor{2}" />
+   <uri-template tml:name="Product" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromProducer{1}/Product{2}" />
+   <uri-template tml:name="ProductPublisher" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromProducer{1}/Producer{2}" />
+   <uri-template tml:name="Vendor" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromVendor{1}/Vendor{2}" />
+   <uri-template tml:name="VendorPublisher" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromVendor{1}/Vendor{2}" />
+   <uri-template tml:name="Reviewer" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromRatingSite{1}/Reviewer{2}" />
+   <uri-template tml:name="ReviewerPublisher" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromRatingSite{1}/RatingSite{2}" />
+   <uri-template tml:name="Producer" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromProducer{1}/Producer{2}" />
+   <uri-template tml:name="ProducerPublisher" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromProducer{1}/Producer{2}" />
+   <uri-template tml:name="ProductFeature" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/ProductFeature{1}" />
+   <uri-template tml:name="ProductFeaturePublisher" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/StandardizationInstitution{1}" />
+   <uri-template tml:name="ProductType" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/ProductType{1}" />
+   <uri-template tml:name="ProductTypePublisher" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/StandardizationInstitution{1}" />
+   <uri-template tml:name="Review" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromRatingSite{1}/Review{2}" />
+   <uri-template tml:name="ReviewPublisher" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/dataFromRatingSite{1}/RatingSite{2}" />
+   <uri-template tml:name="Country" tml:value="http://downlode.org/rdf/iso-3166/countries#{1}" />
+
+   <mapping tml:id="TriplesMap1">
+      <logical-table rr:tableName="OFFER"/>
+      <subject-map rr:class="bsbm:Offer" rr:template="Offer(PUBLISHER,NR)"/>
+      <predicate-object-map rr:predicate="bsbm:price" rr:column="PRICE"/>
+      <predicate-object-map rr:predicate="bsbm:validFrom" rr:column="VALIDFROM" rr:datatype="xsd:string"/>
+      <predicate-object-map rr:predicate="bsbm:validTo" rr:column="VALIDTO" rr:datatype="xsd:string"/>
+      <predicate-object-map rr:predicate="bsbm:deliveryDays" rr:column="DELIVERYDAYS"/>
+      <predicate-object-map rr:predicate="bsbm:offerWebpage" rr:column="OFFERWEBPAGE"/>
+      <predicate-object-map rr:predicate="bsbm:product" rr:template="Product(PRODUCER,PRODUCT)"/>
+      <predicate-object-map rr:predicate="bsbm:vendor" rr:template="Vendor(VENDOR,VENDOR)"/>
+      <predicate-object-map rr:predicate="dc:publisher" rr:template="OfferPublisher(VENDOR,VENDOR)"/>
+      <predicate-object-map rr:predicate="dc:date" rr:column="PUBLISHDATE"/>
+   </mapping>
+   <mapping tml:id="TriplesMap2">
+      <logical-table rr:tableName="PERSON"/>
+      <subject-map rr:class="foaf:Person" rr:template="Reviewer(PUBLISHER,NR)"/>
+      <predicate-object-map rr:predicate="foaf:name" rr:column="NAME"/>
+      <predicate-object-map rr:predicate="foaf:mbox_sha1sum" rr:column="MBOX_SHA1SUM"/>
+      <predicate-object-map rr:predicate="bsbm:country" rr:template="Country(COUNTRY)"/>
+      <predicate-object-map rr:predicate="dc:publisher" rr:template="ReviewerPublisher(PUBLISHER,PUBLISHER)"/>
+      <predicate-object-map rr:predicate="dc:date" rr:column="PUBLISHDATE"/>
+   </mapping>
+   <mapping tml:id="TriplesMap3">
+      <logical-table rr:tableName="PRODUCER"/>
+      <subject-map rr:class="bsbm:Producer" rr:template="Producer(NR,NR)"/>
+      <predicate-object-map rr:predicate="rdfs:label" rr:column="LABEL"/>
+      <predicate-object-map rr:predicate="rdfs:comment" rr:column="COMMENT"/>
+      <predicate-object-map rr:predicate="foaf:homepage" rr:column="HOMEPAGE"/>
+      <predicate-object-map rr:predicate="bsbm:country" rr:template="Country(COUNTRY)"/>
+      <predicate-object-map rr:predicate="dc:publisher" rr:template="ProducerPublisher(NR,NR)"/>
+      <predicate-object-map rr:predicate="dc:date" rr:column="PUBLISHDATE"/>
+   </mapping>
+   <mapping tml:id="TriplesMap4">
+      <logical-table rr:tableName="PRODUCT"/>
+      <subject-map rr:class="bsbm:Product" rr:template="Product(PRODUCER,NR)"/>
+      <predicate-object-map rr:predicate="rdfs:label" rr:column="LABEL"/>
+      <predicate-object-map rr:predicate="rdfs:comment" rr:column="COMMENT"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyNumeric1" rr:column="PROPERTYNUM1"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyNumeric2" rr:column="PROPERTYNUM2"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyNumeric3" rr:column="PROPERTYNUM3"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyNumeric4" rr:column="PROPERTYNUM4"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyNumeric5" rr:column="PROPERTYNUM5"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyNumeric6" rr:column="PROPERTYNUM6"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyTextual1" rr:column="PROPERTYTEX1"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyTextual2" rr:column="PROPERTYTEX2"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyTextual3" rr:column="PROPERTYTEX3"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyTextual4" rr:column="PROPERTYTEX4"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyTextual5" rr:column="PROPERTYTEX5"/>
+      <predicate-object-map rr:predicate="bsbm:productPropertyTextual6" rr:column="PROPERTYTEX6"/>
+      <predicate-object-map rr:predicate="bsbm:producer" rr:template="Producer(PRODUCER,PRODUCER)"/>
+      <predicate-object-map rr:predicate="dc:publisher" rr:template="ProductPublisher(PRODUCER,PRODUCER)"/>
+      <predicate-object-map rr:predicate="dc:date" rr:column="PUBLISHDATE"/>
+   </mapping>
+   <mapping tml:id="TriplesMap5">
+      <logical-table>
+      <![CDATA[
+         SELECT NR, PRODUCER, PRODUCTFEATURE
+         FROM PRODUCT, PRODUCTFEATUREPRODUCT
+         WHERE NR = PRODUCT]]>
+      </logical-table>
+      <subject-map rr:template="Product(PRODUCER,NR)"/>
+      <predicate-object-map rr:predicate="bsbm:productFeature" rr:template="ProductFeature(PRODUCTFEATURE)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap6">
+      <logical-table>
+      <![CDATA[
+         SELECT NR, PRODUCER, PRODUCTTYPE
+         FROM PRODUCT, PRODUCTTYPEPRODUCT
+         WHERE NR = PRODUCT]]>
+      </logical-table>
+      <subject-map rr:template="Product(PRODUCER,NR)"/>
+      <predicate-object-map rr:predicate="bsbm:type" rr:template="ProductType(PRODUCTTYPE)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap7">
+      <logical-table rr:tableName="PRODUCTFEATURE"/>
+      <subject-map rr:class="bsbm:ProductFeature" rr:template="ProductFeature(NR)"/>
+      <predicate-object-map rr:predicate="rdfs:label" rr:column="LABEL"/>
+      <predicate-object-map rr:predicate="rdfs:comment" rr:column="COMMENT"/>
+      <predicate-object-map rr:predicate="dc:publisher" rr:template="ProductFeaturePublisher(PUBLISHER)"/>
+      <predicate-object-map rr:predicate="dc:date" rr:column="PUBLISHDATE"/>
+   </mapping>
+   <mapping tml:id="TriplesMap8">
+      <logical-table rr:tableName="PRODUCTTYPE"/>
+      <subject-map rr:class="bsbm:ProductType" rr:template="ProductType(NR)"/>
+      <predicate-object-map rr:predicate="rdfs:label" rr:column="LABEL"/>
+      <predicate-object-map rr:predicate="rdfs:comment" rr:column="COMMENT"/>
+      <predicate-object-map rr:predicate="bsbm:subClassOf" rr:template="ProductType(PARENT)"/>
+      <predicate-object-map rr:predicate="dc:publisher" rr:template="ProductTypePublisher(PUBLISHER)"/>
+      <predicate-object-map rr:predicate="dc:date" rr:column="PUBLISHDATE"/>
+   </mapping>
+   <mapping tml:id="TriplesMap9">
+      <logical-table rr:tableName="REVIEW"/>
+      <subject-map rr:class="bsbm:Review" rr:template="Review(PUBLISHER,NR)"/>
+      <predicate-object-map rr:predicate="bsbm:reviewDate" rr:column="REVIEWDATE" rr:datatype="xsd:string"/>
+      <predicate-object-map rr:predicate="dc:title" rr:column="TITLE"/>
+      <predicate-object-map rr:predicate="bsbm:rating1" rr:column="RATING1"/>
+      <predicate-object-map rr:predicate="bsbm:rating2" rr:column="RATING2"/>
+      <predicate-object-map rr:predicate="bsbm:rating3" rr:column="RATING3"/>
+      <predicate-object-map rr:predicate="bsbm:rating4" rr:column="RATING4"/>
+      <predicate-object-map rr:predicate="bsbm:reviewFor" rr:template="Product(PRODUCER,PRODUCT)"/>
+      <predicate-object-map rr:predicate="rev:reviewer" rr:template="Reviewer(PUBLISHER,PERSON)"/>
+      <predicate-object-map rr:predicate="rev:text" rr:column="TEXT"/>
+      <predicate-object-map rr:predicate="dc:publisher" rr:template="ReviewPublisher(PUBLISHER,PUBLISHER)"/>
+      <predicate-object-map rr:predicate="dc:date" rr:column="PUBLISHDATE"/>
+   </mapping>
+   <mapping tml:id="TriplesMap10">
+      <logical-table rr:tableName="VENDOR"/>
+      <subject-map rr:class="bsbm:Vendor" rr:template="Vendor(NR,NR)"/>
+      <predicate-object-map rr:predicate="rdfs:label" rr:column="LABEL"/>
+      <predicate-object-map rr:predicate="rdfs:comment" rr:column="COMMENT"/>
+      <predicate-object-map rr:predicate="foaf:homepage" rr:column="HOMEPAGE"/>
+      <predicate-object-map rr:predicate="bsbm:country" rr:template="Country(COUNTRY)"/>
+      <predicate-object-map rr:predicate="dc:publisher" rr:template="VendorPublisher(NR,NR)"/>
+      <predicate-object-map rr:predicate="dc:date" rr:column="PUBLISHDATE"/>
+   </mapping>
+</program>

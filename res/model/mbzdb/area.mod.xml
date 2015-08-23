@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<program xmlns="http://www.obidea.com/ns/termal#"
+   xmlns:tml="http://www.obidea.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="owl" tml:ns="http://www.w3.org/2002/07/owl#" />
+   <prefix tml:name="geo" tml:ns="http://www.w3.org/2003/01/geo/wgs84_pos#" />
+   <prefix tml:name="ov" tml:ns="http://open.vocab.org/terms/" />
+   <prefix tml:name="rdfs" tml:ns="http://www.w3.org/2000/01/rdf-schema#" />
+   <prefix tml:name="rr" tml:ns="http://www.w3.org/ns/r2rml#" />
+   <prefix tml:name="xsd" tml:ns="http://www.w3.org/2001/XMLSchema#" />
+
+   <uri-template tml:name="Area" tml:value="http://musicbrainz.org/area/{1}#_" />
+   <uri-template tml:name="AreaCode" tml:value="http://ontologi.es/place/{1}" />
+
+   <mapping tml:id="area">
+      <logical-table rr:tableName="area" />
+      <subject-map rr:class="geo:SpatialThing" rr:template="Area(gid)"/>
+      <predicate-object-map rr:predicate="rdfs:label" rr:column="name"/>
+      <predicate-object-map rr:predicate="ov:sortLabel" rr:column="sort_name"/>
+   </mapping>
+   <mapping tml:id="area_iso_3166_1">
+      <logical-table>
+      <![CDATA[
+         select gid, code
+         from area
+         join iso_3166_1 on area.id = iso_3166_1.area
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Area(gid)"/>
+      <predicate-object-map rr:predicate="owl:sameAs" rr:template="AreaCode(code)" />
+   </mapping>
+   <mapping tml:id="area_annotation">
+      <logical-table>
+      <![CDATA[
+         select gid, text
+         from annotation
+         join area_annotation on annotation.id = area_annotation.annotation
+         join area on area_annotation.area = area.id
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Area(gid)"/>
+      <predicate-object-map rr:predicate="rdfs:comment" rr:column="text"/>
+   </mapping>
+</program>

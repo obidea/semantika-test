@@ -1,0 +1,36 @@
+@prefix : <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/>.
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix bsbm: <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+# Testing predicate-object map where the predicate is a data property.
+<TriplesMap1>
+   rr:logicalTable [ rr:sqlQuery """
+      select product.nr as productNr, price
+      from product
+      join offer on product.nr=offer.product
+      """ ];
+   rr:subjectMap [
+      rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/product/{productNr}/";
+      rr:class bsbm:product
+   ];
+   rr:predicateObjectMap [
+      rr:predicate bsbm:price;
+      rr:objectMap [ rr:column "price" ]
+   ].
+
+# Testing predicate-object map where the predicate is a object property.
+<TriplesMap2>
+   rr:logicalTable [ rr:sqlQuery """
+      select product.nr as productNr, producer.nr as producerNr
+      from product
+      join producer on product.producer=producer.nr
+      """ ];
+   rr:subjectMap [
+      rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/product/{productNr}/";
+      rr:class bsbm:product
+   ];
+   rr:predicateObjectMap [
+      rr:predicate bsbm:hasProducer;
+      rr:objectMap [ rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/producer/{producerNr}/" ]
+   ].

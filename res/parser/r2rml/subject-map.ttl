@@ -1,0 +1,14 @@
+@prefix : <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/>.
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix bsbm: <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/>.
+
+# Testing subject map
+<TriplesMap1>
+   rr:logicalTable [ rr:sqlQuery """
+      select nr
+      from person
+   """ ];
+   rr:subjectMap [
+      rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/customer/{nr}/";
+      rr:class bsbm:Customer
+   ].

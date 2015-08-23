@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<program xmlns="http://www.logichand.com/ns/termal#"
+   xmlns:tml="http://www.logichand.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+   <prefix tml:name="bsbm" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+   
+   <uri-template tml:name="Product" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/product/{1}/" />
+   <uri-template tml:name="ProductFeature" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/feature/{1}/" />
+   
+   <mapping tml:id="TriplesMap1">
+      <logical-table>
+      <![CDATA[
+         select product, productFeature
+         from productfeatureproduct]]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(product)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:hasProductFeature"
+         rr:template="ProductFeature(productFeature)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap2">
+      <logical-table>
+      <![CDATA[
+         select nr
+         from product]]>
+      </logical-table>
+      <subject-map
+         rr:class="Product"
+         rr:template="Product(nr)"/>
+   </mapping>
+</program>

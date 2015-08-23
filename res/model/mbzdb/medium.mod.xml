@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<program xmlns="http://www.obidea.com/ns/termal#"
+   xmlns:tml="http://www.obidea.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="mo" tml:ns="http://purl.org/ontology/mo/" />
+   <prefix tml:name="dc" tml:ns="http://purl.org/dc/elements/1.1/" />
+   <prefix tml:name="rr" tml:ns="http://www.w3.org/ns/r2rml#" />
+   <prefix tml:name="xsd" tml:ns="http://www.w3.org/2001/XMLSchema#" />
+
+   <uri-template tml:name="Record" tml:value="http://musicbrainz.org/record/{1}#_" />
+   <uri-template tml:name="Track" tml:value="http://musicbrainz.org/track/{1}#_" />
+   <uri-template tml:name="MediumFormat" tml:value="http://musicbrainz.org/medium-format/{1}#_" />
+
+   <mapping tml:id="Medium">
+      <logical-table rr:tableName="medium" />
+      <subject-map rr:class="mo:Record" rr:template="Record(id)"/>
+      <predicate-object-map rr:predicate="dc:title" rr:column="name" rr:datatype="xsd:string" />
+      <predicate-object-map rr:predicate="mo:track_count" rr:column="track_count" rr:datatype="xsd:int" />
+   </mapping>
+   <mapping tml:id="medium_track">
+      <logical-table>
+      <![CDATA[
+         select medium.id as medium_id, track.id as track_id
+         from medium
+         join track on track.medium = medium.id
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Record(medium_id)"/>
+      <predicate-object-map rr:predicate="mo:track" rr:template="Track(track_id)" rr:termType="rr:IRI" />
+   </mapping>
+   <mapping tml:id="medium_format">
+      <logical-table>
+      <![CDATA[
+         select medium.id as medium_id, medium_format.id as medium_format_id
+         from medium
+         join medium_format on medium.format = medium_format.id
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Record(medium_id)"/>
+      <predicate-object-map rr:predicate="mo:media_type" rr:template="MediumFormat(medium_format_id)" rr:termType="rr:IRI"/>
+   </mapping>
+</program>

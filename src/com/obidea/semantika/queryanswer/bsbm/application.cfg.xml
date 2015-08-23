@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE semantika-configuration PUBLIC
+   "-//Semantika/Semantika Configuration DTD//EN"
+   "http://www.obidea.com/semantika/dtd/semantika-configuration-1.0.dtd">
+
+<semantika-configuration>
+   <application-factory name="ntriple-test">
+      <data-source>
+         <property name="connection.url">jdbc:mysql://localhost:3306/bsbm25M</property>
+         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+         <property name="connection.username">semantika</property>
+         <property name="connection.password">semantika</property>
+      </data-source>
+      <ontology-source resource="model/bsbm/bsbm.owl"/>
+      <!-- <mapping-source resource="model/bsbm/mysql/bsbm.mod.xml"/> -->
+      <mapping-source resource="model/bsbm/mysql/bsbm.mod.ttl"/>
+   </application-factory>
+</semantika-configuration>

@@ -1,0 +1,18 @@
+@prefix : <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/>.
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix bsbm: <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/>.
+
+# Testing predicate-object map where the predicate relation is many-to-many. Notice that
+# the rr:class attribute in 'subject-map' tag is omitted.
+<TriplesMap1>
+   rr:logicalTable [ rr:sqlQuery """
+      select product, productFeature
+      from productfeatureproduct
+      """];
+   rr:subjectMap [
+      rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/product/{product}/"
+   ];
+   rr:predicateObjectMap [
+      rr:predicate bsbm:hasProductFeature;
+      rr:objectMap [ rr:template "http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/feature/{productFeature}/" ]
+   ].

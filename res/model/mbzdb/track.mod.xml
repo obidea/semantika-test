@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<program xmlns="http://www.obidea.com/ns/termal#"
+   xmlns:tml="http://www.obidea.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="mo" tml:ns="http://purl.org/ontology/mo/" />
+   <prefix tml:name="dc" tml:ns="http://purl.org/dc/elements/1.1/" />
+   <prefix tml:name="xsd" tml:ns="http://www.w3.org/2001/XMLSchema#" />
+   <prefix tml:name="rr" tml:ns="http://www.w3.org/ns/r2rml#" />
+
+   <uri-template tml:name="Track" tml:value="http://musicbrainz.org/track/{1}#_" />
+   <uri-template tml:name="Recording" tml:value="http://musicbrainz.org/recording/{1}#_" />
+
+   <mapping tml:id="Track">
+      <logical-table rr:tableName="track" />
+      <subject-map rr:class="mo:Track" rr:template="Track(id)"/>
+      <predicate-object-map rr:predicate="mo:track_number" rr:column="position" rr:datatype="xsd:nonNegativeInteger"/>
+      <predicate-object-map rr:predicate="dc:title" rr:column="name"/>
+      <predicate-object-map rr:predicate="mo:duration" rr:column="length"/>
+   </mapping>
+   <mapping tml:id="track_recording">
+      <logical-table>
+      <![CDATA[
+         select track.id as track_id, recording.gid as recording_gid
+         from track
+         join recording on track.recording = recording.id
+      ]]>
+      </logical-table>
+      <subject-map rr:template="Track(track_id)"/>
+      <predicate-object-map rr:predicate="mo:publication_of" rr:template="Recording(recording_gid)"/>
+   </mapping>
+</program>

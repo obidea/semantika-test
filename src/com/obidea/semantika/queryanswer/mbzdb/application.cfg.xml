@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE semantika-configuration PUBLIC
+   "-//Semantika/Semantika Configuration DTD//EN"
+   "http://www.obidea.com/semantika/dtd/semantika-configuration-1.0.dtd">
+
+<semantika-configuration>
+   <application-factory name="musicbrainz-test">
+      <data-source>
+         <property name="connection.url">jdbc:postgresql://localhost:5432/mbzdb</property>
+         <property name="connection.driver_class">org.postgresql.Driver</property>
+         <property name="connection.username">semantika</property>
+         <property name="connection.password">semantika</property>
+      </data-source>
+      <mapping-source resource="model/mbzdb/area.mod.xml" strict-parsing="false"/>
+      <mapping-source resource="model/mbzdb/artist.mod.xml" strict-parsing="false"/>
+      <mapping-source resource="model/mbzdb/dbpedia.mod.xml" strict-parsing="false"/>
+      <mapping-source resource="model/mbzdb/label.mod.xml" strict-parsing="false"/>
+      <mapping-source resource="model/mbzdb/medium.mod.xml" strict-parsing="false"/>
+      <mapping-source resource="model/mbzdb/place.mod.xml" strict-parsing="false"/>
+      <mapping-source resource="model/mbzdb/recording.mod.xml" strict-parsing="false"/>
+      <mapping-source resource="model/mbzdb/release_group.mod.xml" strict-parsing="false"/>
+      <mapping-source resource="model/mbzdb/release.mod.xml" strict-parsing="false"/>
+      <mapping-source resource="model/mbzdb/tag.mod.xml" strict-parsing="false"/>
+      <mapping-source resource="model/mbzdb/track.mod.xml" strict-parsing="false"/>
+      <mapping-source resource="model/mbzdb/work.mod.xml" strict-parsing="false"/>
+   </application-factory>
+</semantika-configuration>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<program xmlns="http://www.logichand.com/ns/termal#"
+   xmlns:tml="http://www.logichand.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+   <prefix tml:name="bsbm" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+
+   <uri-template tml:name="Product" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/product/{1}/" />
+   <uri-template tml:name="Producer" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/producer/{1}/" />
+
+   <mapping tml:id="TriplesMap1">
+      <logical-table>
+      <![CDATA[
+         select product.nr as productNr, producer.nr as producerNr
+         from product
+         join producer on product.producer=producer.nr
+         where country='ID']]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(productNr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:hasLocalProducer"
+         rr:template="Producer(producerNr)"/>
+   </mapping>
+   <mapping tml:id="TriplesMap2">
+      <logical-table>
+      <![CDATA[
+         select product.nr as productNr, producer.nr as producerNr
+         from product
+         join producer on product.producer=producer.nr
+         where country<>'ID']]>
+      </logical-table>
+      <subject-map
+         rr:template="Product(productNr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:hasIntlProducer"
+         rr:template="Producer(producerNr)"/>
+   </mapping>
+</program>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<program xmlns="http://www.logichand.com/ns/termal#"
+   xmlns:tml="http://www.logichand.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+   <prefix tml:name="bsbm" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+
+   <uri-template tml:name="Review" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/review/{1}/" />
+   <uri-template tml:name="Reviewer" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/reviewer/{1}/" />
+
+   <mapping tml:id="TriplesMap1">
+      <logical-table>
+      <![CDATA[
+         select nr, person
+         from review]]>
+      </logical-table>
+      <subject-map
+         rr:template="Review(nr)"/>
+      <predicate-object-map
+         rr:predicate="bsbm:hasCommentFrom"
+         rr:template="Reviewer(person)"/>
+   </mapping>
+</program>

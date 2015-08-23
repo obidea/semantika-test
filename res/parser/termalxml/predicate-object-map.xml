@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<program xmlns="http://www.logichand.com/ns/termal#"
+   xmlns:tml="http://www.logichand.com/ns/termal#"
+   xmlns:rr="http://www.w3.org/ns/r2rml#">
+   <prefix tml:name="" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+   <prefix tml:name="bsbm" tml:ns="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/" />
+   <prefix tml:name="xsd" tml:ns="http://www.w3.org/2001/XMLSchema#" />
+
+   <uri-template tml:name="product" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/product/{1}/" />
+   <uri-template tml:name="producer" tml:value="http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/producer/{1}/" />
+
+   <mapping tml:id="TriplesMap1">
+      <comment>
+         Testing predicate-object map where the predicate is a data property.
+      </comment>
+      <logical-table>
+      <![CDATA[
+        select product.nr as productNr, price
+        from product
+        join offer on product.nr=offer.product]]>
+      </logical-table>
+      <subject-map
+         rr:class="bsbm:product"
+         rr:template="product(productNr)"/>
+      <predicate-object-map
+        rr:predicate="bsbm:price"
+        rr:column="price" rr:datatype="xsd:decimal"/>
+   </mapping>
+   <mapping tml:id="TriplesMap2">
+      <comment>
+         Testing predicate-object map where the predicate is a object property.
+      </comment>
+      <logical-table>
+      <![CDATA[
+        select product.nr as productNr, producer.nr as producerNr
+        from product
+        join producer on product.producer=producer.nr]]>
+      </logical-table>
+      <subject-map
+         rr:class="bsbm:product"
+         rr:template="product(productNr)"/>
+      <predicate-object-map
+        rr:predicate="bsbm:hasProducer"
+        rr:template="producer(producerNr)"/>
+   </mapping>
+</program>
